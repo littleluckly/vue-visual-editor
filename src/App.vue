@@ -8,9 +8,11 @@
             </div>
             <div class="preview" @dragover="dragOver" @drop="drop">
                 <h3>预览区域</h3>
-                <div v-for="component in components" :key="component.id" :data-id="component.id" @contextmenu="(e)=>rightClick(e, component.id)">
-                    <component :is="component.componentName"/>
-                </div>
+                <transition-group name="list" tag="p">
+                    <div v-for="component in components" :key="component.id" :data-id="component.id" @contextmenu="(e)=>rightClick(e, component.id)">
+                        <component :is="component.componentName"/>
+                    </div>
+                </transition-group>
             </div>
             <div class="right">
                 <h3>属性</h3>
@@ -95,5 +97,21 @@ p {
 .box-card {
     position: absolute;
     width: 180px;
+    p {
+        cursor: pointer;
+    }
+}
+.list-item {
+    display: inline-block;
+    margin-right: 10px;
+}
+.list-enter-active,
+.list-leave-active {
+    transition: all 1s;
+}
+.list-enter, .list-leave-to
+/* .list-leave-active for below version 2.1.8 */ {
+    opacity: 0;
+    transform: translateY(30px);
 }
 </style>
